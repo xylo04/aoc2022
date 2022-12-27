@@ -33,25 +33,25 @@ func main() {
 func score(strat string) int {
 	switch strat {
 	case "A X":
-		return rock + draw
+		return lose + scissors
 	case "B X":
-		return rock + lose
+		return lose + rock
 	case "C X":
-		return rock + win
+		return lose + paper
 
 	case "A Y":
-		return paper + win
+		return draw + rock
 	case "B Y":
-		return paper + draw
+		return draw + paper
 	case "C Y":
-		return paper + lose
+		return draw + scissors
 
 	case "A Z":
-		return scissors + lose
+		return win + paper
 	case "B Z":
-		return scissors + win
+		return win + scissors
 	case "C Z":
-		return scissors + draw
+		return win + rock
 	default:
 		panic("unexpected input")
 	}

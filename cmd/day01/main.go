@@ -31,5 +31,14 @@ func main() {
 	}
 
 	sort.Sort(sort.Reverse(sort.IntSlice(calories)))
-	fmt.Printf("The elf with the most food has %d calories", calories[0])
+	fmt.Printf("The elf with the most food has %d calories\n", calories[0])
+	fmt.Printf("The top three elves are carrying a total of %d calories\n", sum(calories[0:3]))
+}
+
+func sum(inputs []int) int {
+	var acc = 0
+	for _, v := range inputs {
+		acc += v
+	}
+	return acc
 }

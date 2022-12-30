@@ -17,22 +17,27 @@ func main() {
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"#", "Compartment 1", "Compartment 2", "Intersection", "Priority"})
+	t.AppendHeader(table.Row{"Group", "Intersection", "Priority"})
 
 	acc := 1
 	pri := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		pack := scanner.Text()
-		c1 := pack[:len(pack)/2]
-		c2 := pack[len(pack)/2:]
-		i := intersect.SimpleGeneric([]rune(c1), []rune(c2))[0]
+		e1 := scanner.Text()
+		scanner.Scan()
+		e2 := scanner.Text()
+		scanner.Scan()
+		e3 := scanner.Text()
+
+		i1 := intersect.SimpleGeneric([]rune(e1), []rune(e2))
+		i2 := intersect.SimpleGeneric([]rune(e2), []rune(e3))
+		i := intersect.SimpleGeneric(i1, i2)[0]
 		p := priority(int(i))
-		t.AppendRows([]table.Row{{acc, c1, c2, string(i), p}})
+		t.AppendRows([]table.Row{{acc, string(i), p}})
 		pri += p
 		acc++
 	}
-	t.AppendFooter(table.Row{"", "", "", "", pri})
+	t.AppendFooter(table.Row{"", "", pri})
 	t.Render()
 }
 

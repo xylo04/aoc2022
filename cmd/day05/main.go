@@ -51,9 +51,13 @@ func runAllMoves(state ContainerState, moves []Move) {
 }
 
 func runOneMove(state ContainerState, m Move) {
+	var unstacked Stack[rune]
 	for i := 0; uint(i) < m.num; i++ {
 		container, _ := state.stacks[m.from].Pop()
-		state.stacks[m.to].Push(container)
+		unstacked.Push(container)
+	}
+	for u, more := unstacked.Pop(); more; u, more = unstacked.Pop() {
+		state.stacks[m.to].Push(u)
 	}
 }
 

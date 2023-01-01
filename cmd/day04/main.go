@@ -21,13 +21,13 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		aMin, aMax, bMin, bMax := parseLine(scanner.Text())
-		aContainsB := rangeContains(aMin, aMax, bMin) && rangeContains(aMin, aMax, bMax)
-		bContainsA := rangeContains(bMin, bMax, aMin) && rangeContains(bMin, bMax, aMax)
-		if aContainsB || bContainsA {
+		aOverlapsB := rangeContains(aMin, aMax, bMin) || rangeContains(aMin, aMax, bMax)
+		bOverlapsA := rangeContains(bMin, bMax, aMin) || rangeContains(bMin, bMax, aMax)
+		if aOverlapsB || bOverlapsA {
 			acc++
 		}
 	}
-	println("Total number of fully contained assignments: ", acc)
+	println("Total number of overlapping assignments: ", acc)
 }
 
 // rangeContains returns whether the target value is between min and max (inclusive).

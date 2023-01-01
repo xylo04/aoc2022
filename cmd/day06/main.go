@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+const distinctLen = 14
+
 func main() {
 	file, err := os.Open("input.txt")
 	if err != nil {
@@ -20,8 +22,8 @@ func main() {
 }
 
 func findMarker(signal string) int {
-	for i := 4; i < len(signal); i++ {
-		window := signal[i-4 : i]
+	for i := distinctLen; i < len(signal); i++ {
+		window := signal[i-distinctLen : i]
 		if allDifferent(window) {
 			return i
 		}

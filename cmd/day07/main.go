@@ -6,6 +6,7 @@ import (
 	"github.com/psanford/memfs"
 	"io/fs"
 	"log"
+	"math"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -29,8 +30,8 @@ func main() {
 
 	f := buildFs(string(terminal))
 	dirs := findDirSizes(f)
-	sum := sumSmallDirs(dirs)
-	fmt.Printf("%d\n", sum)
+	name, size := findDirToDelete(dirs)
+	fmt.Printf("Delete dir %s to free up %d bytes\n", name, size)
 }
 
 func sumSmallDirs(dirs map[string]int64) int64 {
@@ -95,4 +96,21 @@ func findRecursiveSize(f fs.FS, path string) int64 {
 		return nil
 	})
 	return size
+}
+
+const totalStorage = 70000000
+const requireFreeStorage = 30000000
+
+func findDirToDelete(dirs map[string]int64) (string, int64) {
+	currentFree := totalStorage - dirs["."]
+	needToFree := requireFreeStorage - currentFree
+	candidateName := ""
+	candidateSize := int64(math.MaxInt64)
+	for k, v := range dirs {
+		if v >= needToFree && v < candidateSize {
+			candidateSize = v
+			candidateName = k
+		}
+	}
+	return candidateName, candidateSize
 }

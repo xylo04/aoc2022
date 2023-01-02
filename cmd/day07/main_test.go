@@ -159,3 +159,28 @@ func Test_sumSmallDirs(t *testing.T) {
 		})
 	}
 }
+
+func Test_findDirToDelete(t *testing.T) {
+	type args struct {
+		dirs map[string]int64
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  string
+		want1 int64
+	}{
+		{name: "1", args: args{dirs: dirSizes}, want: "d", want1: 24933642},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := findDirToDelete(tt.args.dirs)
+			if got != tt.want {
+				t.Errorf("findDirToDelete() got = %v, want %v", got, tt.want)
+			}
+			if got1 != tt.want1 {
+				t.Errorf("findDirToDelete() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}

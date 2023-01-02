@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/jedib0t/go-pretty/v6 v6.4.3
 	github.com/juliangruber/go-intersect/v2 v2.0.1
+	github.com/psanford/memfs v0.0.0-20210214183328-a001468d78ef
 )
 
 require (
